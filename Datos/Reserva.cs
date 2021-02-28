@@ -19,7 +19,7 @@ namespace Datos
         public Nullable<long> PeliculaId { get; set; }
         public Nullable<System.DateTime> Fecha { get; set; }
     
-        public virtual Cliente Cliente { get; set; }
         public virtual Pelicula Pelicula { get; set; }
+        public virtual Cliente Cliente { get; set; }
     }
 }

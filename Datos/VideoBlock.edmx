@@ -20,7 +20,7 @@
           <Property Name="Direccion" Type="nvarchar" MaxLength="100" />
           <Property Name="Email" Type="nvarchar" MaxLength="100" />
           <Property Name="password" Type="nvarchar" MaxLength="100" />
-          <Property Name="esAdiministrador" Type="bit" />
+          <Property Name="esAdministrador" Type="bit" />
         </EntityType>
         <EntityType Name="Pelicula">
           <Key>
@@ -84,34 +84,16 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="videoBlockModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Cliente">
-          <Key>
-            <PropertyRef Name="ClienteId" />
-          </Key>
-          <Property Name="ClienteId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PrimerNombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SegundoNombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PrimerApellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SegundoApellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TipoDocumento" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Documento" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Celular" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Reservas" Relationship="videoBlockModel.FK_Reserva_Cliente" FromRole="Cliente" ToRole="Reserva" />
-          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="esAdiministrador" Type="Boolean" />
-        </EntityType>
         <EntityContainer Name="videoBlockEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Clientes" EntityType="Self.Cliente" />
           <EntitySet Name="Peliculas" EntityType="videoBlockModel.Pelicula" />
           <EntitySet Name="Reservas" EntityType="videoBlockModel.Reserva" />
-          <AssociationSet Name="FK_Reserva_Cliente" Association="videoBlockModel.FK_Reserva_Cliente">
-            <End Role="Cliente" EntitySet="Clientes" />
-            <End Role="Reserva" EntitySet="Reservas" />
-          </AssociationSet>
           <AssociationSet Name="FK_Reserva_Pelicula" Association="videoBlockModel.FK_Reserva_Pelicula">
             <End Role="Pelicula" EntitySet="Peliculas" />
+            <End Role="Reserva" EntitySet="Reservas" />
+          </AssociationSet>
+          <EntitySet Name="Clientes" EntityType="videoBlockModel.Cliente" />
+          <AssociationSet Name="FK_Reserva_Cliente" Association="videoBlockModel.FK_Reserva_Cliente">
+            <End Role="Cliente" EntitySet="Clientes" />
             <End Role="Reserva" EntitySet="Reservas" />
           </AssociationSet>
         </EntityContainer>
@@ -136,8 +118,38 @@
           <Property Name="ClienteId" Type="Int64" />
           <Property Name="PeliculaId" Type="Int64" />
           <Property Name="Fecha" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Cliente" Relationship="videoBlockModel.FK_Reserva_Cliente" FromRole="Reserva" ToRole="Cliente" />
           <NavigationProperty Name="Pelicula" Relationship="videoBlockModel.FK_Reserva_Pelicula" FromRole="Reserva" ToRole="Pelicula" />
+          <NavigationProperty Name="Cliente" Relationship="videoBlockModel.FK_Reserva_Cliente" FromRole="Reserva" ToRole="Cliente" />
+        </EntityType>
+        <Association Name="FK_Reserva_Pelicula">
+          <End Type="videoBlockModel.Pelicula" Role="Pelicula" Multiplicity="0..1" />
+          <End Type="videoBlockModel.Reserva" Role="Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pelicula">
+              <PropertyRef Name="PeliculaId" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="PeliculaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteId" />
+          </Key>
+          <Property Name="ClienteId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PrimerNombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SegundoNombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PrimerApellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SegundoApellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TipoDocumento" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Documento" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Celular" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="esAdministrador" Type="Boolean" />
+          <NavigationProperty Name="Reservas" Relationship="videoBlockModel.FK_Reserva_Cliente" FromRole="Cliente" ToRole="Reserva" />
         </EntityType>
         <Association Name="FK_Reserva_Cliente">
           <End Type="videoBlockModel.Cliente" Role="Cliente" Multiplicity="0..1" />
@@ -151,42 +163,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Reserva_Pelicula">
-          <End Type="videoBlockModel.Pelicula" Role="Pelicula" Multiplicity="0..1" />
-          <End Type="videoBlockModel.Reserva" Role="Reserva" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pelicula">
-              <PropertyRef Name="PeliculaId" />
-            </Principal>
-            <Dependent Role="Reserva">
-              <PropertyRef Name="PeliculaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="videoBlockModelStoreContainer" CdmEntityContainer="videoBlockEntities">
-          <EntitySetMapping Name="Clientes">
-            <EntityTypeMapping TypeName="videoBlockModel.Cliente">
-              <MappingFragment StoreEntitySet="Cliente">
-                <ScalarProperty Name="esAdiministrador" ColumnName="esAdiministrador" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
-                <ScalarProperty Name="PrimerNombre" ColumnName="PrimerNombre" />
-                <ScalarProperty Name="SegundoNombre" ColumnName="SegundoNombre" />
-                <ScalarProperty Name="PrimerApellido" ColumnName="PrimerApellido" />
-                <ScalarProperty Name="SegundoApellido" ColumnName="SegundoApellido" />
-                <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
-                <ScalarProperty Name="Documento" ColumnName="Documento" />
-                <ScalarProperty Name="Celular" ColumnName="Celular" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Peliculas">
             <EntityTypeMapping TypeName="videoBlockModel.Pelicula">
               <MappingFragment StoreEntitySet="Pelicula">
@@ -207,6 +189,24 @@
                 <ScalarProperty Name="PeliculaId" ColumnName="PeliculaId" />
                 <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
                 <ScalarProperty Name="ReservaId" ColumnName="ReservaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="videoBlockModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="esAdministrador" ColumnName="esAdministrador" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Documento" ColumnName="Documento" />
+                <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
+                <ScalarProperty Name="SegundoApellido" ColumnName="SegundoApellido" />
+                <ScalarProperty Name="PrimerApellido" ColumnName="PrimerApellido" />
+                <ScalarProperty Name="SegundoNombre" ColumnName="SegundoNombre" />
+                <ScalarProperty Name="PrimerNombre" ColumnName="PrimerNombre" />
+                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

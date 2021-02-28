@@ -5,11 +5,11 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b9f847c70c86411fadbfc6c011e7b11b" Name="Diagram1">
-        <EntityTypeShape EntityType="videoBlockModel.Cliente" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="videoBlockModel.Pelicula" Width="1.5" PointX="0.75" PointY="5" />
         <EntityTypeShape EntityType="videoBlockModel.Reserva" Width="1.5" PointX="3" PointY="1.25" />
-        <AssociationConnector Association="videoBlockModel.FK_Reserva_Cliente" />
         <AssociationConnector Association="videoBlockModel.FK_Reserva_Pelicula" />
+        <EntityTypeShape EntityType="videoBlockModel.Cliente" Width="1.5" PointX="3.375" PointY="5" />
+        <AssociationConnector Association="videoBlockModel.FK_Reserva_Cliente" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -18,5 +18,7 @@ namespace Entities
         public decimal? Celular { get; set; }
         public string Direccion { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
+        public bool? EsAdministrador { get; set; }
     }
 }

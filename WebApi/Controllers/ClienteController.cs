@@ -33,7 +33,9 @@ namespace WebApi.Controllers
                                             PrimerNombre = r.PrimerNombre,
                                             SegundoApellido = r.SegundoApellido,
                                             SegundoNombre = r.SegundoNombre,
-                                            TipoDocumento = r.TipoDocumento
+                                            TipoDocumento = r.TipoDocumento,
+                                            EsAdministrador = r.esAdministrador,
+                                            Password = r.password
                                         });
             }
 
@@ -59,7 +61,9 @@ namespace WebApi.Controllers
                     PrimerNombre = r.PrimerNombre,
                     SegundoApellido = r.SegundoApellido,
                     SegundoNombre = r.SegundoNombre,
-                    TipoDocumento = r.TipoDocumento
+                    TipoDocumento = r.TipoDocumento,
+                    EsAdministrador = r.esAdministrador,
+                    Password = r.password
                 };
             }
 
@@ -101,7 +105,9 @@ namespace WebApi.Controllers
                         PrimerNombre = r.PrimerNombre,
                         SegundoApellido = r.SegundoApellido,
                         SegundoNombre = r.SegundoNombre,
-                        TipoDocumento = r.TipoDocumento
+                        TipoDocumento = r.TipoDocumento,
+                        EsAdministrador = r.esAdministrador,
+                        Password = r.password
                     };
 
                 }
@@ -129,6 +135,8 @@ namespace WebApi.Controllers
                     cliente.SegundoApellido = pCliente.SegundoApellido;
                     cliente.SegundoNombre = pCliente.SegundoNombre;
                     cliente.TipoDocumento = pCliente.TipoDocumento;
+                    cliente.password = pCliente.password;
+                    cliente.esAdministrador = pCliente.esAdministrador;
 
                     _context.SaveChanges();
                 }

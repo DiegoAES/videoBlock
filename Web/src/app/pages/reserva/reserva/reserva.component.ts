@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ReservaService } from 'src/app/services/reserva/reserva.service';
 //import {} from 
 
 @Component({
@@ -8,9 +10,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReservaComponent implements OnInit {
 
-  constructor() { }
+  listaPeliculas: any[];
+  reserva: any = {};
+
+  constructor(
+              private router: Router,
+              private reservaSrervice: ReservaService
+    ) 
+    { }
+
 
   ngOnInit(): void {
+    let clienteId = localStorage.getItem('ClienteId')
+
+    if (!clienteId) {
+      alert('debe logearse para ingresar a esta opción')
+      this.router.navigate(['Home'])
+    }
+
+
+  }
+
+  Guardar(){
+
   }
 
 }

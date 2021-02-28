@@ -1,24 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="videoBlockModelStoreContainer" CdmEntityContainer="videoBlockEntities">
-    <EntitySetMapping Name="Clientes">
-      <EntityTypeMapping TypeName="videoBlockModel.Cliente">
-        <MappingFragment StoreEntitySet="Cliente">
-          <ScalarProperty Name="esAdiministrador" ColumnName="esAdiministrador" />
-          <ScalarProperty Name="password" ColumnName="password" />
-          <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
-          <ScalarProperty Name="PrimerNombre" ColumnName="PrimerNombre" />
-          <ScalarProperty Name="SegundoNombre" ColumnName="SegundoNombre" />
-          <ScalarProperty Name="PrimerApellido" ColumnName="PrimerApellido" />
-          <ScalarProperty Name="SegundoApellido" ColumnName="SegundoApellido" />
-          <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
-          <ScalarProperty Name="Documento" ColumnName="Documento" />
-          <ScalarProperty Name="Celular" ColumnName="Celular" />
-          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Peliculas">
       <EntityTypeMapping TypeName="videoBlockModel.Pelicula">
         <MappingFragment StoreEntitySet="Pelicula">
@@ -39,6 +21,24 @@
           <ScalarProperty Name="PeliculaId" ColumnName="PeliculaId" />
           <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
           <ScalarProperty Name="ReservaId" ColumnName="ReservaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clientes">
+      <EntityTypeMapping TypeName="videoBlockModel.Cliente">
+        <MappingFragment StoreEntitySet="Cliente">
+          <ScalarProperty Name="esAdministrador" ColumnName="esAdministrador" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Celular" ColumnName="Celular" />
+          <ScalarProperty Name="Documento" ColumnName="Documento" />
+          <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
+          <ScalarProperty Name="SegundoApellido" ColumnName="SegundoApellido" />
+          <ScalarProperty Name="PrimerApellido" ColumnName="PrimerApellido" />
+          <ScalarProperty Name="SegundoNombre" ColumnName="SegundoNombre" />
+          <ScalarProperty Name="PrimerNombre" ColumnName="PrimerNombre" />
+          <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

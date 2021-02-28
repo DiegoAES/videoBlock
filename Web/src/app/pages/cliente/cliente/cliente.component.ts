@@ -19,14 +19,25 @@ export class ClienteComponent implements OnInit {
 
   ngOnInit(): void {
     let clienteId = localStorage.getItem('ClienteId')
-    console.log(clienteId);
-    if (clienteId) {
-      
-    }else{
+
+    if (!clienteId) {
       alert('debe logearse para ingresar a esta opción')
       this.router.navigate(['Home'])
     }
-    this.cargarLista();
+
+    let cliente: any = {}
+    this.clienteService.BuscarCliente( clienteId )
+          .subscribe( respuesta => {
+            cliente = respuesta;
+
+            if (cliente.EsAdministrador !== true){
+              alert('Solo los administradores pueden ingresar a esta opción')
+              this.router.navigate(['Home'])
+            }
+            this.cargarLista();
+          });
+
+    
   }
 
   cargarLista() {
