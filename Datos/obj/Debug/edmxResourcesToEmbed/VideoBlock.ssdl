@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="videoBlockModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="ClienteId" />
+    </Key>
+    <Property Name="ClienteId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PrimerNombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="SegundoNombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="PrimerApellido" Type="nvarchar" MaxLength="50" />
+    <Property Name="SegundoApellido" Type="nvarchar" MaxLength="50" />
+    <Property Name="TipoDocumento" Type="nvarchar" MaxLength="50" />
+    <Property Name="Documento" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="Celular" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="Direccion" Type="nvarchar" MaxLength="100" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Pelicula">
+    <Key>
+      <PropertyRef Name="PeliculaId" />
+    </Key>
+    <Property Name="PeliculaId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Titulo" Type="nvarchar" MaxLength="100" />
+    <Property Name="Descripcion" Type="nvarchar" MaxLength="500" />
+    <Property Name="Actores" Type="nchar" MaxLength="1000" />
+    <Property Name="Director" Type="nvarchar" MaxLength="100" />
+    <Property Name="Costo" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Cantidad" Type="int" />
+  </EntityType>
+  <EntityType Name="Reserva">
+    <Key>
+      <PropertyRef Name="ReservaId" />
+    </Key>
+    <Property Name="ReservaId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClienteId" Type="bigint" />
+    <Property Name="PeliculaId" Type="bigint" />
+    <Property Name="Fecha" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_Reserva_Cliente">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+    <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="ClienteId" />
+      </Principal>
+      <Dependent Role="Reserva">
+        <PropertyRef Name="ClienteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Reserva_Pelicula">
+    <End Role="Pelicula" Type="Self.Pelicula" Multiplicity="0..1" />
+    <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pelicula">
+        <PropertyRef Name="PeliculaId" />
+      </Principal>
+      <Dependent Role="Reserva">
+        <PropertyRef Name="PeliculaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="videoBlockModelStoreContainer">
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pelicula" EntityType="Self.Pelicula" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reserva" EntityType="Self.Reserva" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Reserva_Cliente" Association="Self.FK_Reserva_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Reserva" EntitySet="Reserva" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Reserva_Pelicula" Association="Self.FK_Reserva_Pelicula">
+      <End Role="Pelicula" EntitySet="Pelicula" />
+      <End Role="Reserva" EntitySet="Reserva" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

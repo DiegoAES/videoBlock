@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="videoBlockModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteId" />
+          </Key>
+          <Property Name="ClienteId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PrimerNombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="SegundoNombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="PrimerApellido" Type="nvarchar" MaxLength="50" />
+          <Property Name="SegundoApellido" Type="nvarchar" MaxLength="50" />
+          <Property Name="TipoDocumento" Type="nvarchar" MaxLength="50" />
+          <Property Name="Documento" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Celular" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Pelicula">
+          <Key>
+            <PropertyRef Name="PeliculaId" />
+          </Key>
+          <Property Name="PeliculaId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titulo" Type="nvarchar" MaxLength="100" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="500" />
+          <Property Name="Actores" Type="nchar" MaxLength="1000" />
+          <Property Name="Director" Type="nvarchar" MaxLength="100" />
+          <Property Name="Costo" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Cantidad" Type="int" />
+        </EntityType>
+        <EntityType Name="Reserva">
+          <Key>
+            <PropertyRef Name="ReservaId" />
+          </Key>
+          <Property Name="ReservaId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClienteId" Type="bigint" />
+          <Property Name="PeliculaId" Type="bigint" />
+          <Property Name="Fecha" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Reserva_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteId" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reserva_Pelicula">
+          <End Role="Pelicula" Type="Self.Pelicula" Multiplicity="0..1" />
+          <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pelicula">
+              <PropertyRef Name="PeliculaId" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="PeliculaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="videoBlockModelStoreContainer">
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pelicula" EntityType="Self.Pelicula" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reserva" EntityType="Self.Reserva" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Reserva_Cliente" Association="Self.FK_Reserva_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Reserva" EntitySet="Reserva" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reserva_Pelicula" Association="Self.FK_Reserva_Pelicula">
+            <End Role="Pelicula" EntitySet="Pelicula" />
+            <End Role="Reserva" EntitySet="Reserva" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="videoBlockModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteId" />
+          </Key>
+          <Property Name="ClienteId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PrimerNombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SegundoNombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PrimerApellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SegundoApellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TipoDocumento" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Documento" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Celular" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Reservas" Relationship="videoBlockModel.FK_Reserva_Cliente" FromRole="Cliente" ToRole="Reserva" />
+        </EntityType>
+        <EntityContainer Name="videoBlockEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clientes" EntityType="Self.Cliente" />
+          <EntitySet Name="Peliculas" EntityType="videoBlockModel.Pelicula" />
+          <EntitySet Name="Reservas" EntityType="videoBlockModel.Reserva" />
+          <AssociationSet Name="FK_Reserva_Cliente" Association="videoBlockModel.FK_Reserva_Cliente">
+            <End Role="Cliente" EntitySet="Clientes" />
+            <End Role="Reserva" EntitySet="Reservas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reserva_Pelicula" Association="videoBlockModel.FK_Reserva_Pelicula">
+            <End Role="Pelicula" EntitySet="Peliculas" />
+            <End Role="Reserva" EntitySet="Reservas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Pelicula">
+          <Key>
+            <PropertyRef Name="PeliculaId" />
+          </Key>
+          <Property Name="PeliculaId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titulo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Actores" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
+          <Property Name="Director" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Costo" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Cantidad" Type="Int32" />
+          <NavigationProperty Name="Reservas" Relationship="videoBlockModel.FK_Reserva_Pelicula" FromRole="Pelicula" ToRole="Reserva" />
+        </EntityType>
+        <EntityType Name="Reserva">
+          <Key>
+            <PropertyRef Name="ReservaId" />
+          </Key>
+          <Property Name="ReservaId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClienteId" Type="Int64" />
+          <Property Name="PeliculaId" Type="Int64" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Cliente" Relationship="videoBlockModel.FK_Reserva_Cliente" FromRole="Reserva" ToRole="Cliente" />
+          <NavigationProperty Name="Pelicula" Relationship="videoBlockModel.FK_Reserva_Pelicula" FromRole="Reserva" ToRole="Pelicula" />
+        </EntityType>
+        <Association Name="FK_Reserva_Cliente">
+          <End Type="videoBlockModel.Cliente" Role="Cliente" Multiplicity="0..1" />
+          <End Type="videoBlockModel.Reserva" Role="Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteId" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="ClienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reserva_Pelicula">
+          <End Type="videoBlockModel.Pelicula" Role="Pelicula" Multiplicity="0..1" />
+          <End Type="videoBlockModel.Reserva" Role="Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pelicula">
+              <PropertyRef Name="PeliculaId" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="PeliculaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="videoBlockModelStoreContainer" CdmEntityContainer="videoBlockEntities">
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="videoBlockModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
+                <ScalarProperty Name="PrimerNombre" ColumnName="PrimerNombre" />
+                <ScalarProperty Name="SegundoNombre" ColumnName="SegundoNombre" />
+                <ScalarProperty Name="PrimerApellido" ColumnName="PrimerApellido" />
+                <ScalarProperty Name="SegundoApellido" ColumnName="SegundoApellido" />
+                <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
+                <ScalarProperty Name="Documento" ColumnName="Documento" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Peliculas">
+            <EntityTypeMapping TypeName="videoBlockModel.Pelicula">
+              <MappingFragment StoreEntitySet="Pelicula">
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+                <ScalarProperty Name="Director" ColumnName="Director" />
+                <ScalarProperty Name="Actores" ColumnName="Actores" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="PeliculaId" ColumnName="PeliculaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservas">
+            <EntityTypeMapping TypeName="videoBlockModel.Reserva">
+              <MappingFragment StoreEntitySet="Reserva">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="PeliculaId" ColumnName="PeliculaId" />
+                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
+                <ScalarProperty Name="ReservaId" ColumnName="ReservaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
