@@ -4,6 +4,8 @@
     <EntitySetMapping Name="Clientes">
       <EntityTypeMapping TypeName="videoBlockModel.Cliente">
         <MappingFragment StoreEntitySet="Cliente">
+          <ScalarProperty Name="esAdiministrador" ColumnName="esAdiministrador" />
+          <ScalarProperty Name="password" ColumnName="password" />
           <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
           <ScalarProperty Name="PrimerNombre" ColumnName="PrimerNombre" />
           <ScalarProperty Name="SegundoNombre" ColumnName="SegundoNombre" />

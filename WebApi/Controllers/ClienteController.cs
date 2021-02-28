@@ -67,13 +67,48 @@ namespace WebApi.Controllers
         }
 
         // POST api/<controller>
-        public void Post([FromBody] Cliente pCliente)
+        [HttpPost]
+        [Route("Guardar")]
+        public void Guardar([FromBody] Cliente pCliente)
         {
             using (videoBlockEntities _context = new videoBlockEntities())
             {
                 _context.Clientes.Add(pCliente);
                 _context.SaveChanges();
             }
+        }
+
+        [HttpPost]
+        [ActionName("LogIn")]
+        public ClienteTO LogIn([FromBody] Cliente pCliente)
+        {
+            ClienteTO cliente = null;
+            using (videoBlockEntities _context = new videoBlockEntities())
+            {
+                Cliente r = _context.Clientes
+                                       .Where(c => c.Documento == pCliente.Documento && c.password == pCliente.password)
+                                       .FirstOrDefault();
+                if (r != null)
+                {
+                    cliente = new ClienteTO
+                    {
+                        Celular = r.Celular,
+                        ClienteId = r.ClienteId,
+                        Direccion = r.Direccion,
+                        Documento = r.Documento,
+                        Email = r.Email,
+                        PrimerApellido = r.PrimerApellido,
+                        PrimerNombre = r.PrimerNombre,
+                        SegundoApellido = r.SegundoApellido,
+                        SegundoNombre = r.SegundoNombre,
+                        TipoDocumento = r.TipoDocumento
+                    };
+
+                }
+
+            }
+
+            return cliente;
         }
 
         // PUT api/<controller>/5

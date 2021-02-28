@@ -28,4 +28,8 @@ export class ClienteService {
     return this.httpClient.get(`http://localhost:50678/api/cliente/${id}`);
   }
 
+  LogIn( cliente ){
+    return this.httpClient.post<any>(`http://localhost:50678/api/cliente/LogIn`, cliente);
+  }
+
 }

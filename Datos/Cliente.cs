@@ -30,6 +30,8 @@ namespace Datos
         public Nullable<decimal> Celular { get; set; }
         public string Direccion { get; set; }
         public string Email { get; set; }
+        public string password { get; set; }
+        public Nullable<bool> esAdiministrador { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reserva> Reservas { get; set; }

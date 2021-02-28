@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ClienteService } from 'src/app/services/cliente/cliente.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  cliente: any = {};
+
+  constructor( 
+                private clienteService: ClienteService,
+                private router: Router,
+     ) 
+     { }
 
   ngOnInit(): void {
+
+  }
+
+  LogIn(){
+    this.clienteService.LogIn( this.cliente )
+      .subscribe( respuesta => {
+        if ( respuesta === null )
+        {
+          alert('usuario o contraseña erroneos')
+          return false;
+        }
+        localStorage.setItem('ClienteId',respuesta.ClienteId);
+        this.router.navigate(['/Pelicula'])        
+      });
   }
 
 }
