@@ -14,7 +14,7 @@ export class PeliculaComponent {
   dataSource = new MatTableDataSource();
 
   constructor( private peliculaService: PeliculaService ) { 
-    peliculaService.listarClientes()
+    peliculaService.listarPeliculas()
       .subscribe( respuesta =>  {
         
         this.dataSource = new MatTableDataSource( respuesta );      

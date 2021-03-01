@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ReservaTO.cs" />
     <Compile Include="PeliculaTO.cs" />
     <Compile Include="ClienteTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -8,7 +8,7 @@ export class PeliculaService {
 
   constructor( private httpClient: HttpClient ) { }
 
-  listarClientes(){
+  listarPeliculas(){
     return this.httpClient.get<any[]>('http://localhost:50678/api/Pelicula');
   }
 }

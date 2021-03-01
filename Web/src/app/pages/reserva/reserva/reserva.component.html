@@ -1,17 +1,43 @@
 <div class="container">
 
-    <div class="mb-3 row">
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Cliente
+            </th>
+            <th>
+                Titulo
+            </th>
+            <th>
+                fecha
+            </th>
+        </tr>
+        <tr *ngFor="let pelicula of listaPeliculasGuardadas; let i = index ">
+            <td>
+                {{ pelicula.NombreCliente }}
+            </td>
+            <td>
+                {{ pelicula.TituloPelicula }}
+            </td>
+            <td>
+                {{ pelicula.Fecha }}
+            </td>
+        </tr>
+    </table>
+
+
+    <div class="mb-3 row" style="padding-top: 20px;">
         <div class="col-sm-2">
             <label class="form-label">Pelicula</label>
         </div>
         <div class="col-sm-10">
             <mat-form-field class="select-width">
-                <mat-select [(ngModel)]="reserva" required>
-                  <mat-option *ngFor="let tipoI of listaPeliculas" [value]="tipoI">
-                    {{ tipoI.nombre }}
-                  </mat-option>
+                <mat-select [(ngModel)]="reserva.PeliculaId" required>
+                    <mat-option *ngFor="let pelicula of listaPeliculas" [value]="pelicula.PeliculaId">
+                        {{ pelicula.Titulo }}
+                    </mat-option>
                 </mat-select>
-              </mat-form-field>
+            </mat-form-field>
         </div>
     </div>
 
